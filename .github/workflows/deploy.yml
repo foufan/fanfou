@@ -28,7 +28,7 @@ jobs:
       - name: Deploy to GitHub Pages
         env:
           DEPLOY_REPO: foufan/foufan.github.io
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_TOKEN }}
         run: |
           # 设置 SSH 配置
           mkdir -p ~/.ssh
