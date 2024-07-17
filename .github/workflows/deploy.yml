@@ -37,3 +37,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          repository: https://github.com/foufan/foufan.gihub.io.git
+          token: ${{ secrets.GITHUB_TOKEN }}
