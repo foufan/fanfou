@@ -1,0 +1,50 @@
+---
+title: 尚能饭否
+description: 专注、坚持、成长
+template: splash
+hero:
+  tagline: 专注、坚持、成长
+#   image:
+#     file: ../../assets/houston.webp
+  actions:
+    - text: 快速开始
+      link: /welecome/
+      icon: right-arrow
+      variant: primary
+    - text: 关于我们
+      link: /others
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## 学习笔记
+
+<CardGrid stagger>
+	<Card title="经验分享" icon="open-book">
+		<ul>
+	    	<li>开发工具</li>
+			<li>使用教程</li>
+		</ul>
+	</Card>
+	<Card title="后端笔记" icon="open-book">
+		<ul>
+	    	<li>Java</li>
+			<li>Rust</li>
+		</ul>
+	</Card>
+	<Card title="前端笔记" icon="open-book">
+		<ul>
+	    	<li>TypeScript</li>
+			<li>Vue</li>
+			<li>UnoCss</li>
+		</ul>
+	</Card>
+	<Card title="个人博客" icon="open-book">
+		<ul>
+	    	<li>吐槽</li>
+			<li>笔记</li>
+			<li>关于</li>
+		</ul>
+	</Card>
+</CardGrid>
