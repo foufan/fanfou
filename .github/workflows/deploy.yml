@@ -18,22 +18,22 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm install
 
       - name: Build project
-        run: |
-          npm run build
+        run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Setup SSH and deploy
         env:
           DEPLOY_REPO: foufan/foufan.github.io
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_TOKEN }}
         run: |
           # 设置 SSH 配置
           mkdir -p ~/.ssh
-          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+          echo "${SSH_PRIVATE_TOKEN}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+
+          # 添加 GitHub 的 SSH key 到 known_hosts
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
           # 克隆目标仓库
@@ -42,7 +42,7 @@ jobs:
 
           # 清空目标仓库并复制新的构建产物
           rm -rf *
-          cp -r ../dist/* .
+          cp -r ../build/* .
 
           # 提交并推送更改
           git add .
