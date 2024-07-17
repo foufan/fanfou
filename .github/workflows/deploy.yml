@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -23,28 +21,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Setup SSH and deploy
-        env:
-          DEPLOY_REPO: foufan/foufan.github.io
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          # 设置 SSH 配置
-          mkdir -p ~/.ssh
-          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-          # 添加 GitHub 的 SSH key 到 known_hosts
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-          # 克隆目标仓库
-          git clone git@github.com:foufan/foufan.github.io.git deploy_repo
-          cd deploy_repo
-
-          # 清空目标仓库并复制新的构建产物
-          rm -rf *
-          cp -r ../dist/* .
-
-          # 提交并推送更改
-          git add .
-          git commit -m "Deploy from foufan/foufan"
-          git push origin main
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./dist # 你的构建输出目录
