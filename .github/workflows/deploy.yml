@@ -37,7 +37,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
           # 克隆目标仓库
-          git clone git@github.com:foufan/foufan.gihub.io.git deploy_repo
+          git clone git@github.com:foufan/foufan.github.io.git deploy_repo
           cd deploy_repo
 
           # 清空目标仓库并复制新的构建产物
