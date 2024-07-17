@@ -26,11 +26,11 @@ jobs:
       - name: Setup SSH and deploy
         env:
           DEPLOY_REPO: foufan/foufan.github.io
-          SSH_PRIVATE_TOKEN: ${{ secrets.SSH_PRIVATE_TOKEN }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           # 设置 SSH 配置
           mkdir -p ~/.ssh
-          echo "${SSH_PRIVATE_TOKEN}" > ~/.ssh/id_rsa
+          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
           # 添加 GitHub 的 SSH key 到 known_hosts
