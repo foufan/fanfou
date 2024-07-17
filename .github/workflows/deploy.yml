@@ -42,7 +42,7 @@ jobs:
 
           # 清空目标仓库并复制新的构建产物
           rm -rf *
-          cp -r ../build/* .
+          cp -r ../dist/* .
 
           # 提交并推送更改
           git add .
