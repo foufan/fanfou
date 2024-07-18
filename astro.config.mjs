@@ -7,7 +7,7 @@ export default defineConfig({
   base: '/',
   integrations: [
     starlight({
-      title: "尚能饭否?",
+      title: "饭否",
       locales: {
 				root: {
 					label: '简体中文',
