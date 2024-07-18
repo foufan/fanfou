@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ main ] # 每次推送到 `main` 分支时触发这个“工作流程”
+  workflow_dispatch: # 允许你在 GitHub 上的 Actions 标签中手动触发此“工作流程”
 
 permissions:
-  contents: read
+  contents: read # 允许 job 克隆 repo 并创建一个 page deployment
   pages: write
   id-token: write
 
@@ -15,37 +15,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # 使用 actions/checkout@v4 检出存储库
 
       - name: Install pnpm
         run: |
-          npm install -g pnpm
+          npm install -g pnpm # 安装 pnpm
 
-      - name: Cache pnpm store
+      - name: 打印 pnpm 存储路径
+        run: |
+          echo "PNPM Store Path: $(pnpm store path)" # 打印 pnpm 存储路径
+
+      - name: 列出 node_modules
+        run: |
+          ls node_modules || echo "node_modules 目录不存在" # 列出 node_modules 目录，如果不存在则打印信息
+
+      - name: 缓存 pnpm store
         uses: actions/cache@v3
         id: pnpm-cache
         with:
-          path: ~/.pnpm-store
+          path: ~/.pnpm-store # 缓存 pnpm 存储
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Cache node_modules
+      - name: 缓存 node_modules
         uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: node_modules
+          path: node_modules # 缓存 node_modules 目录
           key: ${{ runner.os }}-node_modules-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: 安装依赖
+        run: pnpm install # 安装依赖
 
-      - name: Build project
+      - name: 构建项目
         run: pnpm run build # 确保这个命令将构建产物输出到 dist 目录
 
-      - name: Upload artifact
+      - name: 上传构建产物
         uses: actions/upload-artifact@v3
         with:
           name: dist
@@ -55,13 +63,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
+      - name: 下载构建产物
         uses: actions/download-artifact@v3
         with:
           name: dist
           path: dist
 
-      - name: Configure SSH
+      - name: 配置 SSH
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: |
@@ -70,7 +78,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Deploy to GitHub Pages
+      - name: 部署到 GitHub Pages
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
