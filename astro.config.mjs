@@ -4,7 +4,7 @@ import starlight from "@astrojs/starlight";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://foufan.github.io',
-  base: '/foufan.github.io/',
+  base: '/',
   integrations: [
     starlight({
       title: "尚能饭否?",
