@@ -30,7 +30,7 @@ jobs:
           ls node_modules || echo "node_modules 目录不存在" # 列出 node_modules 目录，如果不存在则打印信息
 
       - name: 缓存 pnpm store
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: pnpm-cache
         with:
           path: ~/.pnpm-store # 缓存 pnpm 存储
@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: 缓存 node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: node-modules-cache
         with:
           path: node_modules # 缓存 node_modules 目录
@@ -58,7 +58,7 @@ jobs:
           touch dist/.nojekyll
 
       - name: 上传构建产物
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 下载构建产物
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
@@ -82,12 +82,26 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: 部署到 GitHub Pages
+      - name: 克隆 gh-pages 分支
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git clone --branch gh-pages git@github.com:foufan/foufan.github.io.git deploy
-          rsync -av --delete --exclude '.git' dist/ deploy/
+
+      - name: 备份 CNAME 文件
+        run: |
+          if [ -f deploy/CNAME ]; then cp deploy/CNAME CNAME; fi
+
+      - name: 同步构建产物
+        run: |
+          rsync -av --delete --exclude '.git' --exclude 'CNAME' dist/ deploy/
+
+      - name: 恢复 CNAME 文件
+        run: |
+          if [ -f CNAME ]; then mv CNAME deploy/CNAME; fi
+
+      - name: 提交并推送到 gh-pages 分支
+        run: |
           cd deploy
           git add .
           git commit -m "Deploy to GitHub Pages"
