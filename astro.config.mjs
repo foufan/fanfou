@@ -19,14 +19,21 @@ export default defineConfig({
       },
       sidebar: [
         {
+          label: "经验分享",
+          // 自动生成一个链接分组
+          autogenerate: { directory: "ExpShare" },
+ 
+        },
+        {
           label: "前端笔记",
           // 自动生成一个链接分组
-          autogenerate: { directory: "frontend" },
+          autogenerate: { directory: "Frontend" },
+ 
         },
         {
           label: "后端笔记",
           // 自动生成一个链接分组
-          autogenerate: { directory: "backend" },
+          autogenerate: { directory: "Backend" },
         },
       ],
     }),
