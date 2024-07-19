@@ -1,13 +1,19 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightBlog from 'starlight-blog'
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://fou.fan",
-  base: "/",
+  // base: "/",
   integrations: [
     starlight({
-      title: "饭否",
+      title: "FOU.FAN",
+      description: "FouFan's Blog",
+      logo: {
+        src: './src/assets/logo.svg',
+        replacesTitle: true,
+      },
       locales: {
         root: {
           label: "简体中文",
@@ -36,6 +42,19 @@ export default defineConfig({
           autogenerate: { directory: "Backend" },
         },
       ],
+      plugins: [starlightBlog(
+        ({
+          title: 'Blog',
+          authors: {
+            hideoo: {
+              name: '王子肥波',
+              title: '人生海海，山山而川.',
+              picture: '/a.jpg', // Images in the `public` directory are supported.
+              url: 'https://fou.fan',
+            },
+            },
+        })
+      )],
     }),
   ],
 });
