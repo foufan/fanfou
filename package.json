@@ -13,11 +13,9 @@
     "@astrojs/starlight": "^0.25.1",
     "@astrojs/starlight-tailwind": "^2.0.3",
     "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.11.5",
+    "astro": "^4.12.2",
     "sharp": "^0.33.4",
-    "tailwindcss": "^3.4.6",
-    "@types/culori": "^2.0.0",
-    "culori": "^3.2.0",
-    "starlight-blog": "workspace:*"
+    "starlight-blog": "^0.11.0",
+    "tailwindcss": "^3.4.6"
   }
 }

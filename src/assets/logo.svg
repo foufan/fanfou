@@ -2,7 +2,7 @@
     <style>
         path { fill: #008148; }
         @media (prefers-color-scheme: dark) {
-            path { fill: var(--sl-color-text-accent) }
+            path { fill: #99daaf; }
         }
     </style>
 <path d="M 960.3 451.6 c -1.2 201.9 -135.9 372.2 -320.2 427.2 v 81.5 h -256 V 879 C 199.5 824.1 64.6 653.7 63.3 451.6 h 897 Z"  fill=" ">
