@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@astrojs/starlight':
-        specifier: ^0.25.1
-        version: 0.25.1(astro@4.12.2(@types/node@18.19.41))
+        specifier: ^0.25.2
+        version: 0.25.2(astro@4.12.2(@types/node@18.19.41))
       '@astrojs/starlight-tailwind':
         specifier: ^2.0.3
-        version: 2.0.3(@astrojs/starlight@0.25.1(astro@4.12.2(@types/node@18.19.41)))(@astrojs/tailwind@5.1.0(astro@4.12.2(@types/node@18.19.41))(tailwindcss@3.4.6))(tailwindcss@3.4.6)
+        version: 2.0.3(@astrojs/starlight@0.25.2(astro@4.12.2(@types/node@18.19.41)))(@astrojs/tailwind@5.1.0(astro@4.12.2(@types/node@18.19.41))(tailwindcss@3.4.6))(tailwindcss@3.4.6)
       '@astrojs/tailwind':
         specifier: ^5.1.0
         version: 5.1.0(astro@4.12.2(@types/node@18.19.41))(tailwindcss@3.4.6)
@@ -24,8 +24,8 @@ importers:
         specifier: ^0.33.4
         version: 0.33.4
       starlight-blog:
-        specifier: ^0.11.0
-        version: 0.11.0(@astrojs/starlight@0.25.1(astro@4.12.2(@types/node@18.19.41)))(astro@4.12.2(@types/node@18.19.41))
+        specifier: ^0.11.1
+        version: 0.11.1(@astrojs/starlight@0.25.2(astro@4.12.2(@types/node@18.19.41)))(astro@4.12.2(@types/node@18.19.41))
       tailwindcss:
         specifier: ^3.4.6
         version: 3.4.6
@@ -120,8 +120,8 @@ packages:
     peerDependencies:
       astro: ^4.8.6
 
-  '@astrojs/starlight@0.25.1':
-    resolution: {integrity: sha512-tniE870QpwDs7stJk/qb1LwE78761Fi77qF/UsWedDU90gC6gPjGOHNrbQYUABAmkQ63t3/Jpq9/kmS6sfHT0g==}
+  '@astrojs/starlight@0.25.2':
+    resolution: {integrity: sha512-VcFe9yXB0oUIoEU0lLdDA3jnbtjVzSXXpX/oI8OW4ofEHCt8L9V27f+NzRjB0A1+2D6FxAEoAw3NKoP06PLRQA==}
     peerDependencies:
       astro: ^4.8.6
 
@@ -2173,8 +2173,8 @@ packages:
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
 
-  starlight-blog@0.11.0:
-    resolution: {integrity: sha512-3ZM4FUW/6bKyEspXR6KOuSpdj7PxePhn8UTU5M7TBTk1s1NLtcf4d+ndrGWNpNkeuTfzhP/F4CRY6jRsyMzRKA==}
+  starlight-blog@0.11.1:
+    resolution: {integrity: sha512-2nMcYzCOrWZ8/34G7SouSX1jVzwKPARFwyszTF2497FN6ZUdrTsnhLB6Q7/l6fEKdcQkh9UCyMI7coeR670guA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       '@astrojs/starlight': '>=0.24.0'
@@ -2676,9 +2676,9 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/starlight-tailwind@2.0.3(@astrojs/starlight@0.25.1(astro@4.12.2(@types/node@18.19.41)))(@astrojs/tailwind@5.1.0(astro@4.12.2(@types/node@18.19.41))(tailwindcss@3.4.6))(tailwindcss@3.4.6)':
+  '@astrojs/starlight-tailwind@2.0.3(@astrojs/starlight@0.25.2(astro@4.12.2(@types/node@18.19.41)))(@astrojs/tailwind@5.1.0(astro@4.12.2(@types/node@18.19.41))(tailwindcss@3.4.6))(tailwindcss@3.4.6)':
     dependencies:
-      '@astrojs/starlight': 0.25.1(astro@4.12.2(@types/node@18.19.41))
+      '@astrojs/starlight': 0.25.2(astro@4.12.2(@types/node@18.19.41))
       '@astrojs/tailwind': 5.1.0(astro@4.12.2(@types/node@18.19.41))(tailwindcss@3.4.6)
       tailwindcss: 3.4.6
 
@@ -2708,7 +2708,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/starlight@0.25.1(astro@4.12.2(@types/node@18.19.41))':
+  '@astrojs/starlight@0.25.2(astro@4.12.2(@types/node@18.19.41))':
     dependencies:
       '@astrojs/mdx': 3.1.2(astro@4.12.2(@types/node@18.19.41))
       '@astrojs/sitemap': 3.1.6
@@ -2724,6 +2724,7 @@ snapshots:
       hastscript: 9.0.0
       mdast-util-directive: 3.0.0
       mdast-util-to-markdown: 2.1.0
+      mdast-util-to-string: 4.0.0
       pagefind: 1.1.0
       rehype: 13.0.1
       rehype-format: 5.0.0
@@ -5348,10 +5349,10 @@ snapshots:
 
   stackback@0.0.2: {}
 
-  starlight-blog@0.11.0(@astrojs/starlight@0.25.1(astro@4.12.2(@types/node@18.19.41)))(astro@4.12.2(@types/node@18.19.41)):
+  starlight-blog@0.11.1(@astrojs/starlight@0.25.2(astro@4.12.2(@types/node@18.19.41)))(astro@4.12.2(@types/node@18.19.41)):
     dependencies:
       '@astrojs/rss': 4.0.5
-      '@astrojs/starlight': 0.25.1(astro@4.12.2(@types/node@18.19.41))
+      '@astrojs/starlight': 0.25.2(astro@4.12.2(@types/node@18.19.41))
       astro: 4.12.2(@types/node@18.19.41)
       astro-remote: 0.3.2
       github-slugger: 2.0.0
