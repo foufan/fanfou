@@ -6,9 +6,37 @@ description: Java基于DDD和CQRS项目架构
 
 ```
 root
-│── pom.xml                          # Maven 项目文件，管理依赖和插件
+│── pom.xml                          # Maven 项目文件，管理依赖和模块
 │
-├── src
+├── start                            # 独立的启动模块
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   └── com.example.project
+│   │       │       └── Application.java  # Spring Boot 启动类
+│   │       └── resources
+│   │           ├── application.yml       # Spring Boot 配置文件
+│   │           ├── logback-spring.xml    # 日志配置文件
+│   │           └── sql                   # 数据库初始化脚本
+│   └── pom.xml                           # start 模块的 Maven 配置
+│
+├── core                               # 核心模块
+│   ├── core-common                    # 公共功能，如异常处理、验证、通用工具
+│   │   ├── exception                  # 异常处理
+│   │   ├── validation                 # 验证逻辑
+│   │   └── utils                      # 工具类
+│   ├── core-event                     # 领域事件和事件总线
+│   │   ├── event                      # 领域事件
+│   │   └── eventbus                   # 事件总线
+│   ├── core-model                     # 共享领域模型
+│   │   ├── entity                     # 共享实体
+│   │   └── valueobject                # 共享值对象
+│   └── core-utils                     # 工具类和辅助功能
+│       ├── dateutils                  # 日期工具类
+│       └── stringutils                # 字符串工具类
+│   └── core-bom                       # BOM 模块，集中管理依赖版本
+│
+├── src                                # 原有项目主模块
 │   └── main
 │       ├── java
 │       │   └── com.example.project
@@ -50,67 +78,47 @@ root
 │       │               ├── controller    # 监控控制器
 │       │               ├── service       # 监控服务
 │       │               └── config        # 监控配置
-│       └── resources
-│           ├── application.yml           # Spring Boot 配置文件
-│           ├── logback-spring.xml        # 日志配置文件
-│           └── sql                       # 数据库初始化脚本
 │
-├── core
-│   ├── core-common            # 公共功能，如异常处理、验证、通用工具
-│   │   ├── exception          # 异常处理
-│   │   ├── validation         # 验证逻辑
-│   │   └── utils              # 工具类
-│   ├── core-event             # 领域事件和事件总线
-│   │   ├── event              # 领域事件
-│   │   └── eventbus           # 事件总线
-│   ├── core-model             # 共享领域模型
-│   │   ├── entity             # 共享实体
-│   │   └── valueobject        # 共享值对象
-│   └── core-utils             # 工具类和辅助功能
-│       ├── dateutils          # 日期工具类
-│       └── stringutils        # 字符串工具类
-│   └── core-bom               # BOM 模块，集中管理依赖版本
-│
-├── modules
-│   ├── module1               # 业务模块1
-│   │   ├── domain            # 业务领域层
-│   │   │   ├── model         # 领域模型
-│   │   │   ├── service       # 领域服务
-│   │   │   └── event         # 领域事件
-│   │   ├── application       # 业务应用层（CQRS，命令与查询）
-│   │   │   ├── command       # 命令处理
-│   │   │   └── query         # 查询处理
-│   │   ├── interface         # 业务外部接口层（API 等）
-│   │   │   ├── api           # 业务相关的 REST API
-│   │   │   └── integration   # 与外部服务的集成
-│   │   └── infrastructure    # 业务基础设施层
-│   │       ├── repository    # 数据访问层
-│   │       └── messaging     # 消息队列处理
-│   └── module2               # 业务模块2
+├── modules                            # 业务模块
+│   ├── module1                        # 业务模块1
+│   │   ├── domain                     # 业务领域层
+│   │   │   ├── model                  # 领域模型
+│   │   │   ├── service                # 领域服务
+│   │   │   └── event                  # 领域事件
+│   │   ├── application                # 业务应用层（CQRS，命令与查询）
+│   │   │   ├── command                # 命令处理
+│   │   │   └── query                  # 查询处理
+│   │   ├── interface                  # 业务外部接口层（API 等）
+│   │   │   ├── api                    # 业务相关的 REST API
+│   │   │   └── integration            # 与外部服务的集成
+│   │   └── infrastructure             # 业务基础设施层
+│   │       ├── repository             # 数据访问层
+│   │       └── messaging              # 消息队列处理
+│   └── module2                        # 业务模块2
 │       ├── domain
-│       │   ├── model         # 领域模型
-│       │   ├── service       # 领域服务
-│       │   └── event         # 领域事件
-│       ├── application       # 业务应用层（CQRS，命令与查询）
-│       │   ├── command       # 命令处理
-│       │   └── query         # 查询处理
-│       ├── interface         # 业务外部接口层（API 等）
-│       │   ├── api           # 业务相关的 REST API
-│       │   └── integration   # 与外部服务的集成
-│       └── infrastructure    # 业务基础设施层
-│           ├── repository    # 数据访问层
-│           └── messaging     # 消息队列处理
+│       │   ├── model                  # 领域模型
+│       │   ├── service                # 领域服务
+│       │   └── event                  # 领域事件
+│       ├── application                # 业务应用层（CQRS，命令与查询）
+│       │   ├── command                # 命令处理
+│       │   └── query                  # 查询处理
+│       ├── interface                  # 业务外部接口层（API 等）
+│       │   ├── api                    # 业务相关的 REST API
+│       │   └── integration            # 与外部服务的集成
+│       └── infrastructure             # 业务基础设施层
+│           ├── repository             # 数据访问层
+│           └── messaging              # 消息队列处理
 │
-└── test
+└── test                               # 测试模块
     ├── java
     │   └── com.example.project
-    │       ├── core            # 核心模块的测试
-    │       ├── modules         # 各个业务模块的测试
-    │       │   ├── module1     # 业务模块1的测试
-    │       │   └── module2     # 业务模块2的测试
-    │       └── ...             # 其他测试类
+    │       ├── core                   # 核心模块的测试
+    │       ├── modules                # 各个业务模块的测试
+    │       │   ├── module1            # 业务模块1的测试
+    │       │   └── module2            # 业务模块2的测试
+    │       └── ...                    # 其他测试类
     └── resources
-        └── ...                # 测试资源文件
+        └── ...                        # 测试资源文件
 
 
 ```
