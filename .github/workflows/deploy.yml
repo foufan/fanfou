@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # 每次推送到 `main` 分支时触发这个“工作流程”
-  workflow_dispatch: # 允许你在 GitHub 上的 Actions 标签中手动触发此“工作流程”
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
-  contents: read # 允许 job 克隆 repo 并创建一个 page deployment
+  contents: read
   pages: write
   id-token: write
 
@@ -15,25 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v4 # 使用 actions/checkout@v4 检出存储库
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         run: |
-          npm install -g pnpm # 安装 pnpm
+          npm install -g pnpm
 
       - name: 打印 pnpm 存储路径
         run: |
-          echo "PNPM Store Path: $(pnpm store path)" # 打印 pnpm 存储路径
+          echo "PNPM Store Path: $(pnpm store path)"
 
       - name: 列出 node_modules
         run: |
-          ls node_modules || echo "node_modules 目录不存在" # 列出 node_modules 目录，如果不存在则打印信息
+          ls node_modules || echo "node_modules 目录不存在"
 
       - name: 缓存 pnpm store
         uses: actions/cache@v4
         id: pnpm-cache
         with:
-          path: ~/.pnpm-store # 缓存 pnpm 存储
+          path: ~/.pnpm-store
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
@@ -42,20 +42,25 @@ jobs:
         uses: actions/cache@v4
         id: node-modules-cache
         with:
-          path: node_modules # 缓存 node_modules 目录
+          path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
       - name: 安装依赖
-        run: pnpm install # 安装依赖
+        run: pnpm install
 
       - name: 构建项目
-        run: pnpm run build # 确保这个命令将构建产物输出到 dist 目录
+        run: pnpm run build
 
       - name: 创建 .nojekyll 文件
         run: |
           touch dist/.nojekyll
+
+      - name: 创建或更新 _config.yml 文件
+        run: |
+          echo "include:" > dist/_config.yml
+          echo "  - _astro" >> dist/_config.yml
 
       - name: 上传构建产物
         uses: actions/upload-artifact@v4
