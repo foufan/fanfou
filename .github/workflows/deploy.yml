@@ -21,9 +21,11 @@ jobs:
         run: |
           npm install -g pnpm
 
-      - name: 打印 pnpm 存储路径
+      - name: 打印 pnpm 存储路径并保存为环境变量
+        id: pnpm-store-path
         run: |
           echo "PNPM Store Path: $(pnpm store path)"
+          echo "store-path=$(pnpm store path)" >> $GITHUB_ENV
 
       - name: 列出 node_modules
         run: |
@@ -33,7 +35,7 @@ jobs:
         uses: actions/cache@v4
         id: pnpm-cache
         with:
-          path: ~/.pnpm-store
+          path: ${{ env.store-path }} # 使用动态获取的路径
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
