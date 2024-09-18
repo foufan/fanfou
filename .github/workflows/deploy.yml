@@ -55,10 +55,6 @@ jobs:
       - name: 构建项目
         run: pnpm run build
 
-      - name: 创建 .nojekyll 文件
-        run: |
-          touch dist/.nojekyll
-
       - name: 创建或更新 _config.yml 文件
         run: |
           echo "include:" > dist/_config.yml
