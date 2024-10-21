@@ -54,7 +54,7 @@ export default defineConfig({
       ],
       plugins: [
         starlightBlog({
-          title: "Blog",
+          title: "博客",
           authors: {
             hideoo: {
               name: "王子肥波",
