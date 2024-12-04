@@ -18,49 +18,35 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        run: |
-          npm install -g pnpm
+        run: npm install -g pnpm
 
-      - name: 打印 pnpm 存储路径并保存为环境变量
-        id: pnpm-store-path
+      - name: Print pnpm store path and save as environment variable
         run: |
-          echo "PNPM Store Path: $(pnpm store path)"
           echo "store-path=$(pnpm store path)" >> $GITHUB_ENV
 
-      - name: 列出 node_modules
-        run: |
-          ls node_modules || echo "node_modules 目录不存在"
-
-      - name: 缓存 pnpm store
+      - name: Cache dependencies
         uses: actions/cache@v4
-        id: pnpm-cache
         with:
-          path: ${{ env.store-path }} # 使用动态获取的路径
+          path: |
+            ${{ env.store-path }}
+            node_modules
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: 缓存 node_modules
-        uses: actions/cache@v4
-        id: node-modules-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile || pnpm install --no-frozen-lockfile
 
-      - name: 安装依赖
-        run: pnpm install
-
-      - name: 构建项目
+      - name: Build the project
         run: pnpm run build
 
-      - name: 创建或更新 _config.yml 文件
+      - name: Create or update _config.yml file
         run: |
           echo "include:" > dist/_config.yml
           echo "  - _astro" >> dist/_config.yml
 
-      - name: 上传构建产物
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -70,13 +56,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: 下载构建产物
+      - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
 
-      - name: 配置 SSH
+      - name: Configure SSH
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: |
@@ -85,27 +71,29 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: 克隆 gh-pages 分支
+      - name: Clone gh-pages branch
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git clone --branch gh-pages git@github.com:foufan/foufan.github.io.git deploy
 
-      - name: 备份 CNAME 文件
+      - name: Backup and restore CNAME file
         run: |
-          if [ -f deploy/CNAME ]; then cp deploy/CNAME CNAME; fi
-
-      - name: 同步构建产物
-        run: |
+          if [ -f deploy/CNAME ]; then
+            mv deploy/CNAME CNAME
+          fi
           rsync -av --delete --exclude '.git' --exclude 'CNAME' dist/ deploy/
+          if [ -f CNAME ]; then
+            mv CNAME deploy/CNAME
+          fi
 
-      - name: 恢复 CNAME 文件
-        run: |
-          if [ -f CNAME ]; then mv CNAME deploy/CNAME; fi
-
-      - name: 提交并推送到 gh-pages 分支
+      - name: Commit and push to gh-pages branch
         run: |
           cd deploy
-          git add .
-          git commit -m "Deploy to GitHub Pages"
-          git push origin gh-pages
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Deploy to GitHub Pages"
+            git push origin gh-pages
+          else
+            echo "No changes to commit"
+          fi
