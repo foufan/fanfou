@@ -1,0 +1,79 @@
+---
+title: AI 对我工作上的帮助
+description: "Lorem ipsum dolor sit amet"
+pubDate: 2024-12-06
+heroImage: "/blog-2.webp"
+---
+
+export const friends = [
+    {
+        name: "CHATGPT",
+        avatar: "/blog-1.webp",
+        description: "老牌影响力最大的AI",
+        url: "https://chatgpt.com/",
+        tags: ["AI", "老牌", "品质保障"],
+    },
+    {
+        name: "纳米搜索",
+        avatar: "/blog-5.webp",
+        description: "集成众多国产AI集合",
+        url: "https://n.cn",
+        tags: ["框架", "JavaScript"],
+    },
+    {
+        name: "Excalidraw",
+        avatar: "/blog-1.webp",
+        description: "流程图绘画工具，支持AI一件生成流程图，写文档神器。",
+        url: "https://excalidraw.com/",
+        tags: ["AI", "流程图"],
+    },
+    {
+        name: "Bolt",
+        avatar: "/blog-3.webp",
+        description: "前端AI代码生成神奇，支持Vue、React等主流代码",
+        url: "https://bolt.new/",
+        tags: ["AI编程","前端开发"],
+    },
+];
+
+记录一下我工作中用到的 AI 软件。
+
+    <section class="max-w-7xl mx-auto">
+        <div class="grid gap-8 md:grid-cols-2 sm:grid-cols-1">
+            {friends.map((friend) => (
+                <a href={friend.url} target="_blank" rel="noopener noreferrer"
+                    class="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-shrink-0">
+                            <img src={friend.avatar} alt={friend.name}
+                                class="w-16 h-16 rounded-full object-cover group-hover:ring-4 ring-primary-100 transition-all duration-300" />
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors duration-300">
+                                {friend.name}
+                            </h3>
+                            <p class="text-sm text-gray-500 truncate">
+                                {friend.description}
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-600 transition-colors duration-300"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                    </div>
+                    {friend.tags && (
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            {friend.tags.map((tag) => (
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </a>
+            ))}
+        </div>
+    </section>

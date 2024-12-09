@@ -1,0 +1,80 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import ProductGrid from '../../components/products/ProductGrid.astro';
+
+const products = await getCollection('products');
+const sortedProducts = products.sort((a, b) => a.data.order - b.data.order);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={`产品 - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <Header />
+    <main>
+      <!-- Hero Section -->
+      <section class="relative py-20 bg-gradient-to-b from-primary-50 via-white to-white overflow-hidden">
+        <div class="absolute inset-0">
+          <div class="absolute inset-0 bg-grid-slate-900/[0.04] bg-[size:32px_32px]"></div>
+        </div>
+        <div class="relative container mx-auto px-4">
+          <div class="max-w-3xl mx-auto text-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 mb-6">
+              精选推荐
+            </span>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              我们的产品
+            </h1>
+            <p class="text-xl text-gray-600">
+              为您提供专业的技术解决方案，助力业务增长
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Products Section -->
+      <section class="py-20">
+        <div class="container mx-auto px-4">
+          <ProductGrid products={sortedProducts} />
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">准备好开始了吗？</h2>
+            <p class="text-xl text-gray-600 mb-8">
+              选择适合您的解决方案，开启数字化转型之旅
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="mailto:contact@example.com"
+                class="inline-flex items-center justify-center px-6 py-3 rounded-xl text-white bg-primary-600 hover:bg-primary-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary-500/25"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                联系我们
+              </a>
+              <a
+                href="#"
+                class="inline-flex items-center justify-center px-6 py-3 rounded-xl text-gray-700 bg-gray-100 hover:bg-gray-200 transform hover:scale-105 transition-all duration-300"
+              >
+                查看文档
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

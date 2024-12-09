@@ -1,0 +1,64 @@
+---
+const features = [
+  {
+    icon: '📚',
+    title: '深度技术文章',
+    description: '专注于前端开发、工程化实践等技术领域的深度解析',
+    gradient: 'from-blue-500 to-cyan-500'
+  },
+  {
+    icon: '💡',
+    title: '实用开发经验',
+    description: '分享实际项目中的经验教训和最佳实践',
+    gradient: 'from-purple-500 to-pink-500'
+  },
+  {
+    icon: '🎯',
+    title: '持续更新',
+    description: '保持每周更新，持续输出高质量内容',
+    gradient: 'from-green-500 to-teal-500'
+  }
+];
+---
+
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+  <div class="container mx-auto px-4">
+    <!-- 标题部分 -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+        为什么选择这里？
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        我们提供专业的技术内容和优质的交流平台
+      </p>
+    </div>
+
+    <!-- 特性网格 -->
+    <div class="grid md:grid-cols-3 gap-8">
+      {features.map(({ icon, title, description, gradient }) => (
+        <div class="group relative">
+          
+          <div class={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-25 transition-opacity duration-500 rounded-2xl`}></div>
+          
+        
+          <div class="relative z-10 bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2">
+            
+            <div class="flex items-center justify-center w-16 h-16 mb-6 text-4xl text-white bg-gradient-to-r {gradient} rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+              {icon}
+            </div>
+            
+          
+            <h3 class="text-xl font-bold text-gray-900 mb-4">
+              {title}
+            </h3>
+            
+            
+            <p class="text-gray-600 leading-relaxed">
+              {description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

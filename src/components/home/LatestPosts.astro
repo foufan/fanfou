@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../FormattedDate.astro';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900">最新文章</h2>
+      <a href="/blog" 
+        class="group inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
+        查看全部
+        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" 
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {posts.map((post) => (
+        <article class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+          <a href={`/blog/${post.slug}/`} class="block">
+            <div class="relative overflow-hidden aspect-video">
+              <img
+                src={post.data.heroImage}
+                alt=""
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center space-x-1 text-sm text-gray-500 mb-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <FormattedDate date={post.data.pubDate} />
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                {post.data.title}
+              </h3>
+              <p class="text-gray-600 line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

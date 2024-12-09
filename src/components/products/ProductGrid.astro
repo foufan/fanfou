@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  products: CollectionEntry<'products'>[];
+}
+
+const { products } = Astro.props;
+---
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  {products.map((product) => (
+    <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+      <div class="relative aspect-[4/3] overflow-hidden rounded-t-2xl">
+        <img
+          src={product.data.image}
+          alt={product.data.title}
+          class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="absolute top-4 right-4">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/90 text-primary-600 shadow-sm">
+            {product.data.price}
+          </span>
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+          {product.data.title}
+        </h3>
+        <p class="text-gray-600 mb-4 line-clamp-2">
+          {product.data.description}
+        </p>
+        <ul class="space-y-2 mb-6">
+          {product.data.features.slice(0, 3).map((feature) => (
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-primary-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <div class="flex justify-end">
+          <a
+            href={`/products/${product.slug}`}
+            class="inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            了解详情
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>

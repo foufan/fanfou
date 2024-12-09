@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  product: CollectionEntry<'products'>;
+}
+
+const { product } = Astro.props;
+---
+
+<div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+  <div class="aspect-video overflow-hidden">
+    <img
+      src={product.data.image}
+      alt={product.data.title}
+      class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  </div>
+  <div class="p-8">
+    <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors">
+      {product.data.title}
+    </h3>
+    <p class="text-gray-600 mb-6">
+      {product.data.description}
+    </p>
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="text-primary-600 font-semibold text-lg">
+          {product.data.price}
+        </span>
+        <a
+          href={`/products/${product.slug}`}
+          class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-primary-600 hover:bg-primary-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary-500/25"
+        >
+          了解更多
+        </a>
+      </div>
+      <div class="border-t pt-4">
+        <ul class="space-y-2">
+          {product.data.features.slice(0, 3).map((feature) => (
+            <li class="flex items-center text-gray-600">
+              <svg
+                class="w-5 h-5 text-primary-500 mr-2 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+              <span class="text-sm">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

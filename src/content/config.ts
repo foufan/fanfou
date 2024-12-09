@@ -1,12 +1,26 @@
-import { docsSchema, i18nSchema } from '@astrojs/starlight/schema'
-import { defineCollection } from 'astro:content'
-import { blogSchema } from 'starlight-blog/schema'
+import { defineCollection, z } from 'astro:content';
 
-export const collections = {
-  docs: defineCollection({
-    schema: docsSchema({
-      extend: (context) => blogSchema(context),
-    }),
-  }),
-  i18n: defineCollection({ type: 'data', schema: i18nSchema() }),
-}
+const blog = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		pubDate: z.coerce.date(),
+		updatedDate: z.coerce.date().optional(),
+		heroImage: z.string().optional(),
+	}),
+});
+
+const products = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		price: z.string(),
+		features: z.array(z.string()),
+		image: z.string(),
+		order: z.number(),
+	}),
+});
+
+export const collections = { blog, products };

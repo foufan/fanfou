@@ -1,0 +1,16 @@
+---
+const stats = [
+  { number: '1000+', label: '活跃用户' },
+  { number: '99.9%', label: '运行稳定性' },
+  { number: '24/7', label: '技术支持' },
+];
+---
+
+<div class="grid grid-cols-3 gap-8 py-12 border-t border-b border-gray-100">
+  {stats.map(({ number, label }) => (
+    <div class="text-center">
+      <div class="text-3xl font-bold text-primary-600">{number}</div>
+      <div class="text-sm text-gray-600 mt-1">{label}</div>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  features: string[];
+}
+
+const { features } = Astro.props;
+---
+
+<div class="bg-primary-50 rounded-2xl p-8">
+  <h3 class="text-2xl font-bold text-gray-900 mb-6">产品特点</h3>
+  <div class="grid md:grid-cols-2 gap-4">
+    {features.map((feature) => (
+      <div class="flex items-start group">
+        <div class="flex-shrink-0 p-1">
+          <svg
+            class="w-6 h-6 text-primary-500 transform group-hover:scale-110 transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
+        </div>
+        <p class="ml-3 text-gray-700 group-hover:text-gray-900 transition-colors">{feature}</p>
+      </div>
+    ))}
+  </div>
+</div>
