@@ -10,16 +10,18 @@ const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === '/' + subpath?.[0];
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
-	<slot />
+<a 
+  href={href} 
+  class:list={[
+    className, 
+    "inline-flex items-center justify-center text-base font-medium transition-all duration-300 ease-in-out", 
+    "px-6 py-2 rounded-lg", // 使用稍微圆角的设计
+    "shadow-sm hover:shadow-md", // 轻微的阴影变化
+    {
+      'bg-primary-600 text-white shadow-md hover:bg-primary-700 hover:shadow-lg': isActive, // 激活状态
+      'text-gray-700 hover:text-primary-600 hover:bg-gray-100': !isActive // 非激活状态
+    }
+  ]} 
+  {...props}>
+  <slot />
 </a>
-<style>
-	a {
-		display: inline-block;
-		text-decoration: none;
-	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
-	}
-</style>
