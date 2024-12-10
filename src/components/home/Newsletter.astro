@@ -1,28 +1,28 @@
 ---
 ---
-
 <section class="py-20 bg-primary-600">
   <div class="container mx-auto px-4">
     <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-white mb-4">订阅更新</h2>
-      <p class="text-primary-100 mb-8">第一时间获取最新文章和动态</p>
+      <h2 class="text-3xl font-bold text-white mb-4">RSS 订阅更新</h2>
+      <p class="text-primary-100 mb-8">通过RSS获取最新文章和动态，第一时间掌握所有更新。</p>
       
-      <form class="flex gap-4 max-w-md mx-auto">
+      <div class="flex gap-4 max-w-md mx-auto">
         <input
-          type="email"
-          placeholder="请输入您的邮箱"
-          class="flex-1 px-6 py-3 rounded-xl border-2 border-transparent focus:border-white/20 bg-white/10 text-white placeholder-primary-200 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
+          type="text"
+          value="/rss.xml"
+          readonly
+          class="flex-1 px-6 py-3 rounded-xl border-2 border-transparent bg-white/10 text-white placeholder-primary-200 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
         />
         <button
-          type="submit"
+          onclick="window.location.href='/rss.xml';"
           class="px-6 py-3 bg-white text-primary-600 font-medium rounded-xl hover:bg-primary-50 transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/20"
         >
-          订阅
+          立即订阅
         </button>
-      </form>
+      </div>
 
       <p class="mt-4 text-sm text-primary-100">
-        我们承诺保护您的隐私，绝不会向第三方泄露您的信息
+        订阅RSS，即可通过RSS阅读器接收最新更新。我们承诺保护您的隐私，绝不会向第三方泄露您的信息。
       </p>
     </div>
   </div>
