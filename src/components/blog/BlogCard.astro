@@ -7,13 +7,16 @@ interface Props {
 }
 
 const { post } = Astro.props;
+
+// 导入工具函数
+import { getCoverImage } from '../../utils/getCoverImage.ts';
 ---
 
 <article class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
   <a href={`/blog/${post.slug}/`} class="block">
     <div class="relative aspect-video overflow-hidden rounded-t-2xl">
       <img
-        src={post.data.heroImage}
+        src={getCoverImage(post.data.heroImage)}
         alt=""
         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
       />

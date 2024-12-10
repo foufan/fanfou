@@ -8,6 +8,10 @@ import FormattedDate from '../components/FormattedDate.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+// 导入工具函数
+import { getCoverImage } from '../utils/getCoverImage.ts';
+const coverImage = getCoverImage(heroImage);
 ---
 
 <html lang="zh-CN">
@@ -20,11 +24,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main class="w-full max-w-5xl mx-auto p-6 md:p-12">
 			<article class="bg-white rounded-lg shadow-lg overflow-hidden">
 				<!-- 文章封面 -->
-				{heroImage && (
+				 
 					<div class="relative">
 						<img 
 							class="w-full h-64 md:h-96 object-cover rounded-t-lg" 
-							src={heroImage} 
+							src={coverImage} 
 							alt={title} 
 						/>
 						<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900 opacity-60"></div>
@@ -34,7 +38,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							</div>
 						</div>
 					</div>
-				)}
+				 
 
 				<!-- 文章内容 -->
 				<div class="prose prose-lg lg:prose-xl mx-auto p-6  leading-relaxed">
