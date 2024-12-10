@@ -1,0 +1,53 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import BlogHero from '../../components/blog/BlogHero.astro';
+import BlogGrid from '../../components/blog/BlogGrid.astro';
+import BlogPagination from '../../components/blog/BlogPagination.astro';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  return paginate(posts, { pageSize: 6 });
+}
+// 定义 `page` 的类型
+interface PageProps {
+  currentPage: number;
+  data: Array<any>;  // 这里可以根据你的 `BlogGrid` 组件的数据结构进一步细化
+  lastPage: number;
+}
+
+const { page }: { page: PageProps } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={`博客 - 第${page.currentPage}页 - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="bg-gray-50">
+    <Header />
+    <main>
+      <BlogHero />
+      
+      <section class="py-20">
+        <div class="container mx-auto px-4">
+          <BlogGrid posts={page.data} />
+          
+          <div class="mt-12">
+            <BlogPagination
+              currentPage={page.currentPage}
+              totalPages={page.lastPage}
+              baseUrl="/blog"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

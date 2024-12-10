@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../FormattedDate.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
+  <a href={`/blog/${post.slug}/`} class="block">
+    <div class="relative aspect-video overflow-hidden rounded-t-2xl">
+      <img
+        src={post.data.heroImage}
+        alt=""
+        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    </div>
+    <div class="p-6">
+      <div class="flex items-center space-x-4 mb-4">
+        <div class="flex items-center space-x-1 text-sm text-gray-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <FormattedDate date={post.data.pubDate} />
+        </div>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+          技术博客
+        </span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">
+        {post.data.title}
+      </h3>
+      <p class="text-gray-600 line-clamp-2 mb-4">
+        {post.data.description}
+      </p>
+      <div class="flex items-center text-primary-600 group-hover:text-primary-700">
+        <span class="text-sm font-medium">阅读更多</span>
+        <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </div>
+    </div>
+  </a>
+</article>

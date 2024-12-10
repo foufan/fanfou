@@ -1,0 +1,72 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+const showEllipsis = totalPages > 7;
+
+function getVisiblePages() {
+  if (!showEllipsis) return pages;
+  
+  if (currentPage <= 3) {
+    return [...pages.slice(0, 5), '...', totalPages];
+  } else if (currentPage >= totalPages - 2) {
+    return [1, '...', ...pages.slice(totalPages - 5)];
+  } else {
+    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+  }
+}
+
+const visiblePages = getVisiblePages();
+---
+
+<nav class="flex justify-center items-center space-x-2" aria-label="Pagination">
+  {currentPage > 1 && (
+    <a
+      href={`${baseUrl}/${currentPage - 1}`}
+      class="inline-flex items-center px-3 py-2 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-primary-600 transition-colors shadow-sm"
+    >
+      <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      上一页
+    </a>
+  )}
+
+  <div class="hidden md:flex items-center space-x-2">
+    {visiblePages.map((page) => (
+      page === '...' ? (
+        <span class="px-4 py-2 text-gray-500">...</span>
+      ) : (
+        <a
+          href={`${baseUrl}/${page}`}
+          class:list={[
+            'inline-flex items-center justify-center w-10 h-10 rounded-xl text-sm font-medium transition-all duration-200',
+            page === currentPage
+              ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/25 transform scale-110'
+              : 'text-gray-700 bg-white hover:bg-gray-50 hover:text-primary-600 shadow-sm'
+          ]}
+        >
+          {page}
+        </a>
+      )
+    ))}
+  </div>
+
+  {currentPage < totalPages && (
+    <a
+      href={`${baseUrl}/${currentPage + 1}`}
+      class="inline-flex items-center px-3 py-2 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-primary-600 transition-colors shadow-sm"
+    >
+      下一页
+      <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  )}
+</nav>
